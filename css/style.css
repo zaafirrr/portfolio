@@ -70,6 +70,7 @@ section{padding-block:72px;border-top:1px solid var(--line)}
 .s-done{background:var(--ok-soft);color:var(--ok)}
 .s-wip{background:var(--wip-soft);color:var(--wip)}
 .s-plan{background:var(--plan-soft);color:var(--plan)}
+.s-ongoing{background:var(--accent-soft);color:var(--accent)}
 .tags{display:flex;gap:6px;flex-wrap:wrap}
 .tag{font-family:var(--mono);font-size:12px;padding:2px 8px;border-radius:6px;background:var(--accent-soft);color:var(--accent)}
 .c{font-size:13px;padding:3px 9px;border-radius:6px;border:1px solid transparent}
@@ -261,8 +262,8 @@ footer a{color:var(--muted)}
 /* Cards lift, glow slightly and show an accent line along the top */
 .card{position:relative;transition:transform .4s var(--ease),box-shadow .4s var(--ease),border-color .4s var(--ease),background-color .25s}
 .card:hover{transform:translateY(-5px)}
-.proj::before,.cert-card::before{content:"";position:absolute;left:18px;right:18px;top:-1px;height:2px;border-radius:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
-.proj:hover::before,.cert-card:hover::before{transform:scaleX(1)}
+.pcard::before,.proj::before,.cert-card::before{content:"";position:absolute;left:18px;right:18px;top:-1px;height:2px;border-radius:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.pcard:hover::before,.proj:hover::before,.cert-card:hover::before{transform:scaleX(1)}
 .proj h3,.cert-card h3,.card h3{transition:color .3s var(--ease)}
 .proj:hover h3,.cert-card:hover h3{color:var(--accent)}
 
@@ -333,3 +334,71 @@ footer a:hover{color:var(--accent)}
   .flip:not(.flipped):hover .flip-inner{transform:none}
   .flip.flipped:hover .flip-inner{transform:rotateY(180deg)}
 }
+
+/* =====================================================================
+   PROJECT CARDS (homepage + All Projects page)
+   ===================================================================== */
+.pgrid.three{grid-template-columns:repeat(3,1fr)}
+.pcard{display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:20px}
+.plabel{align-self:flex-start;font-size:13px;font-weight:500;padding:4px 11px;border-radius:999px;background:var(--sunken);color:var(--muted);border:1px solid var(--line)}
+.pcard h3{font-size:21px;line-height:1.25}
+.ptitle{all:unset;cursor:pointer;color:var(--ink);transition:color .3s var(--ease)}
+.ptitle:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.pcard:hover .ptitle{color:var(--accent)}
+.pemoji{display:inline-block;transition:transform .4s var(--ease)}
+.pcard:hover .pemoji{transform:scale(1.2) rotate(-8deg)}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:4px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.sdot{width:7px;height:7px;border-radius:50%;display:inline-block;flex:none}
+.sdot.s-done{background:var(--ok)} .sdot.s-wip{background:var(--wip)}
+.sdot.s-ongoing{background:var(--accent)} .sdot.s-plan{background:var(--plan)}
+.pdesc{color:var(--muted);font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ptags{display:flex;flex-wrap:wrap;gap:6px}
+.ptag{font-size:13px;padding:5px 11px;border-radius:999px;background:var(--sunken);color:var(--ink);border:1px solid var(--line);transition:transform .25s var(--ease),border-color .25s}
+.ptag:hover{transform:translateY(-2px);border-color:var(--accent)}
+.ptag.more{color:var(--muted)}
+.pfoot{margin-top:auto;padding-top:6px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.pview{border:0;background:none;padding:0;font:600 15px var(--body);color:var(--ink);cursor:pointer;display:inline-flex;gap:6px;transition:color .25s,gap .3s var(--ease)}
+.pview:hover{color:var(--accent);gap:10px}
+.pcode{width:42px;height:42px;border-radius:50%;border:1px dashed var(--muted);display:grid;place-items:center;color:var(--ink);transition:transform .35s var(--ease),border-color .25s,color .25s}
+.pcode svg{width:18px;height:18px}
+.pcode:hover{transform:rotate(-12deg) scale(1.06);border-color:var(--accent);color:var(--accent)}
+.more-row{display:flex;justify-content:center;margin-top:28px}
+.count-badge{font-family:var(--mono);font-size:12px;padding:1px 7px;border-radius:999px;background:color-mix(in srgb,var(--bg) 22%,transparent)}
+
+/* Project details pop-up */
+.pmodal{width:min(640px,calc(100% - 32px));max-height:calc(100% - 48px);overflow:auto;border:1px solid var(--line);border-radius:22px;padding:26px;background:var(--surface);color:var(--ink);box-shadow:0 30px 80px -30px rgba(0,0,0,.45)}
+.pmodal::backdrop{background:rgba(10,12,18,.45);backdrop-filter:blur(4px)}
+.pmodal[open]{animation:pop .35s var(--ease)}
+@keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+.pm-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.pm-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer;font-size:14px;transition:transform .3s var(--ease)}
+.pm-close:hover{transform:rotate(90deg)}
+.pmodal h3{font-size:26px;margin-bottom:12px}
+.pm-desc{color:var(--muted);margin:16px 0 20px;line-height:1.7}
+.pmodal h4{font-size:14px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:10px;font-weight:400}
+.pmodal .btn{margin-top:22px}
+
+/* All Projects page */
+.all-head{border-top:0;padding-block:48px 8px}
+.all-head h1{font-size:clamp(36px,6vw,56px);font-weight:800;letter-spacing:-.02em}
+.back{display:inline-block;margin-bottom:24px;font-size:14px;font-weight:600;text-decoration:none;color:var(--muted);transition:color .25s,transform .3s var(--ease)}
+.back:hover{color:var(--accent);transform:translateX(-3px)}
+.fpanel{display:grid;gap:14px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.fgroup{display:grid;grid-template-columns:110px 1fr;gap:12px;align-items:center}
+.fgroup>*{min-width:0}
+.flabel{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fpanel .filters{margin:0}
+.fstatus{display:flex;gap:14px;align-items:center;padding-top:10px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.linkbtn{border:0;background:none;padding:0;color:var(--accent);font:600 14px var(--body);cursor:pointer}
+.all-grid{border-top:0;padding-block:24px 72px}
+
+@media (max-width:960px){ .pgrid.three{grid-template-columns:1fr 1fr} }
+@media (max-width:620px){
+  .pgrid.three{grid-template-columns:1fr}
+  .fgroup{grid-template-columns:1fr;gap:6px}
+}
+
+/* Title: emoji stays attached to the last word */
+.nowrap{white-space:nowrap}
+.pemoji{font-size:.9em}
