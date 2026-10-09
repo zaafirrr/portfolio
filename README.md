@@ -61,7 +61,7 @@ Open `js/main.js`, find the `CERTS` list near the top and copy one block.
 ### Add or change a skill
 Edit the `SKILLS` list in `js/main.js`:
 - `w` = professional experience
-- `s` = studied (BTEC)
+- `s` = studied
 - `l` = currently learning
 
 ### Change text
