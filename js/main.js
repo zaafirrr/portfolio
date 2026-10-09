@@ -1,66 +1,4 @@
 /* =====================================================================
-   PROJECTS
-   To add a project, copy one { ... } block and edit it.
-   status: "done" (Completed) | "wip" (In progress) | "plan" (Planned)
-   cat:    one of the category keys in CATS below
-   page:   optional link to a write-up, e.g. "projects/linux-lab.html"
-   Each text has an English (en) and French (fr) version.
-   ===================================================================== */
-const PROJECTS = [
-  { cat:"sec", status:"wip", page:"",
-    title:{ en:"Cybersecurity Assessment Preparation", fr:"Préparation d'une évaluation de cybersécurité" },
-    kind: { en:"Work · Zinath Solutions", fr:"Professionnel · Zinath Solutions" },
-    desc: { en:"Helped prepare and track an Aramco CCC (Cybersecurity Compliance Certificate) assessment for a client: organising controls, coordinating tasks and tracking supporting evidence.",
-            fr:"Participation à la préparation et au suivi d'une évaluation Aramco CCC (certificat de conformité en cybersécurité) pour un client : organisation des contrôles, coordination des tâches et suivi des preuves." },
-    tags:["Evidence tracking","Microsoft 365","Documentation"] },
-
-  { cat:"sec", status:"plan", page:"",
-    title:{ en:"Email Security & DMARC Analysis", fr:"Analyse de la sécurité des e-mails et DMARC" },
-    kind: { en:"Personal project", fr:"Projet personnel" },
-    desc: { en:"Explain SPF, DKIM and DMARC, review the DNS records of a domain I'm authorised to assess, report common misconfigurations, and optionally build a Python checker.",
-            fr:"Expliquer SPF, DKIM et DMARC, analyser les enregistrements DNS d'un domaine que je suis autorisé à évaluer, signaler les erreurs de configuration courantes et, en option, créer un outil de vérification en Python." },
-    tags:["DNS","SPF","DKIM","DMARC","Python"] },
-
-  { cat:"ai", status:"plan", page:"",
-    title:{ en:"Business Process Automation", fr:"Automatisation d'un processus métier" },
-    kind: { en:"Personal project", fr:"Projet personnel" },
-    desc: { en:"A request workflow that validates input, routes for approval, sends notifications, records the outcome and handles failures. Documented before and after, with test cases.",
-            fr:"Un flux de demandes qui valide les informations, les soumet pour approbation, envoie des notifications, enregistre le résultat et gère les erreurs. Documenté avant et après, avec des cas de test." },
-    tags:["Power Automate","Python","Approvals"] },
-
-  { cat:"cloud", status:"plan", page:"",
-    title:{ en:"Entra ID Identity Lab", fr:"Laboratoire d'identité Entra ID" },
-    kind: { en:"Personal project", fr:"Projet personnel" },
-    desc: { en:"A test-tenant lab covering users and groups, role assignments, access control and Conditional Access concepts, noting which features need specific licensing.",
-            fr:"Un laboratoire sur un tenant de test : utilisateurs et groupes, attribution de rôles, contrôle d'accès et accès conditionnel, en précisant les fonctionnalités soumises à licence." },
-    tags:["Entra ID","Conditional Access","RBAC"] },
-
-  { cat:"data", status:"plan", page:"",
-    title:{ en:"IT Operations Dashboard", fr:"Tableau de bord des opérations IT" },
-    kind: { en:"Personal project", fr:"Projet personnel" },
-    desc: { en:"A dashboard built on synthetic service desk data showing ticket volume, categories, resolution times, backlog and recurring issues, with notes on what it tells an IT team.",
-            fr:"Un tableau de bord basé sur des données fictives de service desk : volume de tickets, catégories, délais de résolution, tickets en attente et problèmes récurrents, avec une analyse pour l'équipe IT." },
-    tags:["Excel","Data visualisation"] },
-
-  { cat:"infra", status:"plan", page:"",
-    title:{ en:"Linux Security Lab", fr:"Laboratoire de sécurité Linux" },
-    kind: { en:"Personal project", fr:"Projet personnel" },
-    desc: { en:"An Ubuntu virtual lab for user and permission management, log investigation, services, basic hardening and a simulated incident, with the commands and reasoning documented.",
-            fr:"Un laboratoire virtuel Ubuntu : gestion des utilisateurs et des permissions, analyse des journaux, services, durcissement de base et incident simulé, avec les commandes et le raisonnement documentés." },
-    tags:["Ubuntu","Linux","Logs","Hardening"] },
-];
-
-/* Project categories (filter buttons) */
-const CATS = {
-  all:  { en:"All", fr:"Tous" },
-  infra:{ en:"IT & Infrastructure", fr:"IT & Infrastructure" },
-  sec:  { en:"Cybersecurity", fr:"Cybersécurité" },
-  cloud:{ en:"Cloud & Microsoft", fr:"Cloud & Microsoft" },
-  ai:   { en:"AI & Automation", fr:"IA & Automatisation" },
-  data: { en:"Data & Programming", fr:"Données & Programmation" },
-};
-
-/* =====================================================================
    CERTIFICATIONS & COURSES (newest first)
    To add one, copy a { ... } block. status: "done" | "wip" | "plan"
    logo: 2–3 letters shown until a logo image is added
@@ -150,7 +88,6 @@ const store = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return n
                 set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} } };
 
 let lang = store.get('lang') === 'fr' ? 'fr' : 'en';
-let activeCat = 'all';
 const t = key => (lang === 'fr' ? FR : EN_JS)[key] ?? EN_JS[key] ?? key;
 
 /* ---------- Language ---------- */
@@ -171,8 +108,9 @@ function applyLang(){
   const lb = $('#langBtn');
   lb.textContent = t('js.langBtn');
   lb.setAttribute('aria-label', t('js.langLabel'));
-  $('#flip').setAttribute('aria-label', t('js.flip'));
-  renderFilters(); renderProjects(); renderSkills(); renderCerts(); updateThemeBtn();
+  $('#flip')?.setAttribute('aria-label', t('js.flip'));
+  renderLatest(); renderAll(); renderSkills(); renderCerts(); updateThemeBtn();
+  if (openIndex > -1) openProject(openIndex);
 }
 $('#langBtn').addEventListener('click', () => {
   lang = lang === 'fr' ? 'en' : 'fr';
@@ -201,7 +139,7 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', updateTh
 
 /* ---------- Flip card ---------- */
 const flip = $('#flip');
-flip.addEventListener('click', e => {
+flip?.addEventListener('click', e => {
   if (e.target.closest('a')) return;           // let links on the back work
   const on = !flip.classList.contains('flipped');
   flip.classList.toggle('flipped', on);
@@ -231,35 +169,111 @@ tabs.forEach((tb, i) => {
 $$('[data-tab]').forEach(a => a.addEventListener('click', () => selectTab(a.dataset.tab)));
 
 /* ---------- Projects ---------- */
-const STATUS = { done:'s-done', wip:'s-wip', plan:'s-plan' };
-function renderFilters(){
-  $('#filters').innerHTML = Object.keys(CATS).map(k => {
-    const n = k === 'all' ? PROJECTS.length : PROJECTS.filter(p => p.cat === k).length;
-    return `<button class="filter" type="button" data-cat="${k}" aria-pressed="${k === activeCat}">${esc(CATS[k][lang])}<span class="n">${n}</span></button>`;
+const STATUS = { done:'s-done', wip:'s-wip', ongoing:'s-ongoing', plan:'s-plan' };
+const SHOW_TAGS = 3;
+const CODE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>';
+const fmtDate = d => {
+  const [y, m] = d.split('-').map(Number);
+  return new Intl.DateTimeFormat(lang === 'fr' ? 'fr-FR' : 'en-GB', { month:'short', year:'numeric' }).format(new Date(y, m - 1, 1));
+};
+const statusChip = p => `<span class="chip"><i class="sdot ${STATUS[p.status]}"></i>${esc(fmtDate(p.date))} · ${esc(t('js.' + p.status))}</span>`;
+
+/* Title with the emoji glued to the last word, so it never wraps alone */
+const titleHTML = p => {
+  const text = p.title[lang];
+  if (!p.emoji) return esc(text);
+  const cut = text.lastIndexOf(' ') + 1;
+  return `${esc(text.slice(0, cut))}<span class="nowrap">${esc(text.slice(cut))}&nbsp;<span class="pemoji" aria-hidden="true">${p.emoji}</span></span>`;
+};
+
+function projectCard(p){
+  const i = PROJECTS.indexOf(p);
+  const extra = p.tags.length - SHOW_TAGS;
+  return `
+  <article class="card pcard">
+    <span class="plabel">${esc(p.label[lang])}</span>
+    <h3><button class="ptitle" type="button" data-open="${i}">${titleHTML(p)}</button></h3>
+    <div class="pchips">${statusChip(p)}<span class="chip">${esc(WITH[p.with].chip[lang])}</span></div>
+    <p class="pdesc">${esc(p.desc[lang])}</p>
+    <div class="ptags">${p.tags.slice(0, SHOW_TAGS).map(x => `<span class="ptag">${esc(x)}</span>`).join('')}${extra > 0 ? `<span class="ptag more">+${extra}</span>` : ''}</div>
+    <div class="pfoot">
+      <button class="pview" type="button" data-open="${i}">${esc(t('js.view'))}</button>
+      ${p.repo ? `<a class="pcode" href="${esc(p.repo)}" target="_blank" rel="noopener" aria-label="${esc(t('js.code'))}">${CODE_ICON}</a>` : ''}
+    </div>
+  </article>`;
+}
+
+/* Project details pop-up */
+const modal = document.createElement('dialog');
+modal.className = 'pmodal';
+document.body.appendChild(modal);
+let openIndex = -1;
+function openProject(i){
+  const p = PROJECTS[i]; openIndex = i;
+  modal.innerHTML = `
+    <div class="pm-head">
+      <span class="plabel">${esc(p.label[lang])}</span>
+      <button class="pm-close" type="button" aria-label="${esc(t('js.close'))}">✕</button>
+    </div>
+    <h3>${titleHTML(p)}</h3>
+    <div class="pchips">${statusChip(p)}<span class="chip">${esc(WITH[p.with].chip[lang])}</span><span class="chip">${esc(CATS[p.cat][lang])}</span></div>
+    <p class="pm-desc">${esc(p.desc[lang])}</p>
+    <h4>${esc(t('js.tools'))}</h4>
+    <div class="ptags">${p.tags.map(x => `<span class="ptag">${esc(x)}</span>`).join('')}</div>
+    ${p.repo ? `<a class="btn" href="${esc(p.repo)}" target="_blank" rel="noopener">${CODE_ICON}${esc(t('js.code'))} ↗</a>` : ''}`;
+  if (!modal.open) modal.showModal();
+  $('.pm-close', modal).focus();
+}
+modal.addEventListener('click', e => {
+  if (e.target === modal || e.target.closest('.pm-close')) modal.close();
+});
+modal.addEventListener('close', () => { openIndex = -1; });
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-open]');
+  if (b) openProject(+b.dataset.open);
+});
+
+/* Homepage: the 3 latest projects */
+function renderLatest(){
+  const grid = $('#pgrid'); if (!grid) return;
+  grid.innerHTML = PROJECTS.slice(0, 3).map(projectCard).join('');
+}
+
+/* All Projects page: filters */
+const filters = { year:'all', cat:'all', with:'all' };
+function filterGroup(key, options){
+  const box = $('#f-' + key); if (!box) return;
+  box.innerHTML = [['all', t('js.all')], ...options].map(([v, label]) => {
+    const n = v === 'all' ? PROJECTS.length : PROJECTS.filter(p => (key === 'year' ? p.date.slice(0,4) : p[key]) === v).length;
+    return `<button class="filter" type="button" data-key="${key}" data-val="${esc(v)}" aria-pressed="${filters[key] === v}">${esc(label)}<span class="n">${n}</span></button>`;
   }).join('');
 }
-function renderProjects(){
-  const list = PROJECTS.filter(p => activeCat === 'all' || p.cat === activeCat);
-  $('#pgrid').innerHTML = list.length ? list.map(p => `
-    <article class="card proj">
-      <div class="proj-top"><span class="cat">${esc(CATS[p.cat][lang])}</span><span class="pill ${STATUS[p.status]}">${esc(t('js.' + p.status))}</span></div>
-      <h3>${esc(p.title[lang])}</h3>
-      <span class="kind">${esc(p.kind[lang])}</span>
-      <p style="color:var(--muted);font-size:15px">${esc(p.desc[lang])}</p>
-      <div class="tags">${p.tags.map(x => `<span class="tag">${esc(x)}</span>`).join('')}</div>
-      ${p.page ? `<a class="view" href="${esc(p.page)}">${esc(t('js.view'))}</a>` : ''}
-    </article>`).join('') : `<p class="empty">${esc(t('js.empty'))}</p>`;
+function renderAll(){
+  const grid = $('#allGrid'); if (!grid) return;
+  const years = [...new Set(PROJECTS.map(p => p.date.slice(0, 4)))].sort().reverse();
+  filterGroup('year', years.map(y => [y, y]));
+  filterGroup('cat', Object.keys(CATS).filter(k => PROJECTS.some(p => p.cat === k)).map(k => [k, CATS[k][lang]]));
+  filterGroup('with', Object.keys(WITH).filter(k => PROJECTS.some(p => p.with === k)).map(k => [k, WITH[k][lang]]));
+  const list = PROJECTS.filter(p =>
+    (filters.year === 'all' || p.date.startsWith(filters.year)) &&
+    (filters.cat === 'all' || p.cat === filters.cat) &&
+    (filters.with === 'all' || p.with === filters.with));
+  grid.innerHTML = list.length ? list.map(projectCard).join('') : `<p class="empty">${esc(t('js.empty'))}</p>`;
+  $('#resultCount').textContent = t(list.length === 1 ? 'js.result1' : 'js.results').replace('{n}', list.length);
+  $('#resetFilters').hidden = filters.year === 'all' && filters.cat === 'all' && filters.with === 'all';
 }
-$('#filters').addEventListener('click', e => {
-  const b = e.target.closest('.filter'); if (!b) return;
-  activeCat = b.dataset.cat;
-  renderFilters(); renderProjects();
+document.addEventListener('click', e => {
+  const b = e.target.closest('.filter[data-key]'); if (!b) return;
+  filters[b.dataset.key] = b.dataset.val; renderAll();
 });
-$('#projCount').textContent = PROJECTS.length;
+$('#resetFilters')?.addEventListener('click', () => { filters.year = filters.cat = filters.with = 'all'; renderAll(); });
+
+$$('.projCount').forEach(el => el.textContent = PROJECTS.length);
 
 /* ---------- Certifications ---------- */
 const CERT_STATUS = { done:['js.certDone','s-done'], wip:['js.wip','s-wip'], plan:['js.plan','s-plan'] };
 function renderCerts(){
+  if (!$('#certs')) return;
   $('#certs').innerHTML = CERTS.map(c => `
     <article class="card cert-card">
       <div class="cert-top">
@@ -272,7 +286,7 @@ function renderCerts(){
     </article>`).join('');
   loadLogos($('#certs'));
 }
-$('#certCount').textContent = CERTS.filter(c => c.status === 'done').length;
+if ($('#certCount')) $('#certCount').textContent = CERTS.filter(c => c.status === 'done').length;
 
 
 /* ---------- Company logos ----------
@@ -298,6 +312,7 @@ function loadLogos(scope = document){
 
 /* ---------- Skills ---------- */
 function renderSkills(){
+  if (!$('#skills')) return;
   $('#skills').innerHTML = SKILLS.map(g => `
     <div class="card"><h3>${esc(g[lang])}</h3>
       <div class="chips">${g.items.map(([en, fr, type]) => `<span class="c ${type}">${esc(lang === 'fr' ? fr : en)}</span>`).join('')}</div>
@@ -305,7 +320,7 @@ function renderSkills(){
 }
 
 /* ---------- Contact form: opens the visitor's email app ---------- */
-$('#cform').addEventListener('submit', e => {
+$('#cform')?.addEventListener('submit', e => {
   e.preventDefault();
   const name = $('#f-name').value.trim(), msg = $('#f-msg').value.trim();
   const note = $('#fnote');
@@ -331,7 +346,7 @@ const navLinks = $$('.links a');
 const spy = new IntersectionObserver(entries => entries.forEach(en => {
   if (en.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
 }), { rootMargin: '-45% 0px -50% 0px' });
-$$('main section').forEach(s => spy.observe(s));
+if ($('#about')) $$('main section').forEach(s => spy.observe(s));
 
 /* ---------- Start ---------- */
 applyLang();
