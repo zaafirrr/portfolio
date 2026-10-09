@@ -20,16 +20,20 @@ My personal portfolio website, covering my experience, skills, certifications an
 ## Files
 
 ```
-index.html                The homepage (all sections)
-css/style.css             Styling: colours, fonts, layout, light/dark mode
-js/main.js                Project list, skills list and copy-email button
-projects/_template.html   Template for writing up a project
-assets/favicon.svg        Browser tab icon (put screenshots here too)
+index.html                The homepage
+projects.html             The All Projects page (filters by year, category, who with)
+css/style.css             Styling: colours, fonts, layout, light/dark mode, animations
+js/projects-data.js       All projects — add new ones here
+js/main.js                Certifications, skills, and everything that makes the site work
+js/i18n.js                French translations
+projects/_template.html   Template for a full project write-up (optional)
+assets/favicon.svg        Browser tab icon
+assets/logos/             Company logos (see assets/logos/README.md for file names)
 .nojekyll                 Tells GitHub Pages to serve the files as they are
 README.md                 This file
 ```
 
-The folder structure matters. The page looks for `css/style.css` and `js/main.js`, so if those files sit in the wrong place the site loads with no styling.
+The folder structure matters. If a file sits in the wrong folder, the page loads without its styling or content.
 
 ## Preview on your computer
 
@@ -39,22 +43,18 @@ If you use VS Code, the **Live Server** extension refreshes the page every time 
 
 ## Common edits
 
-### Add a project to the homepage
-Open `js/main.js` and find the `PROJECTS` list. Copy one `{ ... }` block and edit it:
+### Add a project
+Open `js/projects-data.js`, copy one `{ ... }` block and edit it. Newest projects
+appear first; the homepage shows the latest 3 and `projects.html` shows them all.
 
-```js
-{title:"Linux security lab", cat:"IT & Infrastructure", status:"wip", kind:"Personal project",
- desc:"One or two sentences about the project.",
- tags:["Ubuntu","Linux"]},
-```
+- `date`: `"YYYY-MM"`
+- `status`: `"done"`, `"wip"`, `"ongoing"` or `"plan"`
+- `cat`: `ai`, `sec`, `cloud`, `infra`, `data` or `web`
+- `with`: `personal`, `client`, `zinath`, `apprenticeship` or `education`
+- `repo`: a GitHub link (optional) — adds the code button to the card
 
-- `status`: `"done"` (Completed), `"wip"` (In progress) or `"plan"` (Planned)
-- `cat`: one of `IT & Infrastructure`, `Cybersecurity`, `Cloud & Microsoft`, `AI & Automation`, `Data & Programming`
-
-### Write up a project in full
-1. Copy `projects/_template.html` and rename the copy, e.g. `projects/linux-lab.html`
-2. Fill in the ten sections: overview, problem, objectives, tools, my role, method, testing, results, evidence and links
-3. In `js/main.js`, add `page:"projects/linux-lab.html"` to that project. Its title becomes a link.
+### Add a certification
+Open `js/main.js`, find the `CERTS` list near the top and copy one block.
 
 ### Add or change a skill
 Edit the `SKILLS` list in `js/main.js`:

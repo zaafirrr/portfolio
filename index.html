@@ -63,7 +63,7 @@
     <div class="stats">
       <a class="stat" href="#journey" data-tab="exp"><span data-i18n="stat.exp">Experience</span><b data-i18n="stat.expv">Since 2024</b></a>
       <a class="stat" href="#journey" data-tab="edu"><span data-i18n="stat.cert">Certifications</span><b id="certCount">2</b></a>
-      <a class="stat" href="#projects"><span data-i18n="stat.proj">Projects</span><b id="projCount">6</b></a>
+      <a class="stat" href="#projects"><span data-i18n="stat.proj">Projects</span><b class="projCount">16</b></a>
     </div>
 
     <div class="ctas">
@@ -207,7 +207,7 @@
         </div>
       </article>
       <article class="entry">
-        <div class="logo" data-logo="springpod" aria-hidden="true">SP</div>
+        <div class="logo" data-logo="fujitsu" aria-hidden="true">FJ</div>
         <div>
           <div class="entry-top"><h3 data-i18n="v3.title">Software Developer Work Experience</h3><span class="when" data-i18n="v3.when">Sep 2024 – Oct 2024</span></div>
           <div class="meta"><span>Springpod</span><span data-i18n="v.intern">Internship</span></div>
@@ -261,11 +261,13 @@
   <div class="wrap">
     <div class="head">
       <span class="eyebrow" data-i18n="proj.eyebrow">Projects_</span>
-      <h2 data-i18n="proj.title">Projects</h2>
-      <p data-i18n="proj.sub">Each project is labelled as completed, in progress or planned. Workplace examples are anonymised.</p>
+      <h2 data-i18n="proj.title">Latest Projects</h2>
+      <p data-i18n="proj.sub">My three most recent projects. Workplace examples are anonymised.</p>
     </div>
-    <div class="filters" id="filters" role="group" aria-label="Filter projects"></div>
-    <div class="pgrid" id="pgrid"></div>
+    <div class="pgrid three" id="pgrid"></div>
+    <div class="more-row">
+      <a class="btn primary" href="projects.html"><span data-i18n="proj.viewAll">View all projects</span> <span class="count-badge projCount">16</span> →</a>
+    </div>
   </div>
 </section>
 
@@ -314,6 +316,7 @@
 </footer>
 
 <script src="js/i18n.js"></script>
+<script src="js/projects-data.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
