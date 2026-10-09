@@ -15,6 +15,11 @@ const CERTS = [
     title:{ en:"Microsoft Certified: Azure AI Fundamentals", fr:"Microsoft Certified : Azure AI Fundamentals" },
     desc:{ en:"Exam AI-901. AI concepts, generative AI and Microsoft Azure AI services.",
            fr:"Examen AI-901. Concepts d'IA, IA générative et services d'IA de Microsoft Azure." } },
+  { logo:"MS", file:"microsoft", status:"wip", issuer:"Microsoft",
+    date:{ en:"", fr:"" },
+    title:{ en:"Microsoft Certified: Security, Compliance, and Identity Fundamentals", fr:"Microsoft Certified : Security, Compliance, and Identity Fundamentals" },
+    desc:{ en:"Exam SC-900. Security, compliance and identity concepts across Microsoft Entra, Defender and Purview. Currently preparing.",
+           fr:"Examen SC-900. Concepts de sécurité, de conformité et d'identité avec Microsoft Entra, Defender et Purview. En préparation." } },
   { logo:"ED", file:"easydmarc", status:"done", issuer:"EasyDMARC",
     date:{ en:"May 2026", fr:"mai 2026" },
     title:{ en:"EasyDMARC Certification", fr:"Certification EasyDMARC" },
@@ -42,9 +47,9 @@ const CERTS = [
            fr:"Fonctionnement de l'IA générative, entraînement des modèles et conception de prompts, et outils AWS associés." } },
   { logo:"HP", file:"hackpath", status:"wip", issuer:"HackPath",
     date:{ en:"", fr:"" },
-    title:{ en:"Linux Foundations", fr:"Linux Foundations" },
-    desc:{ en:"Terminal, files and permissions, users and groups, processes and services, packages, logs and Ubuntu virtual machines.",
-           fr:"Terminal, fichiers et permissions, utilisateurs et groupes, processus et services, paquets, journaux et machines virtuelles Ubuntu." } },
+    title:{ en:"HackPath Foundations Certification", fr:"Certification HackPath Foundations" },
+    desc:{ en:"90-day cybersecurity bootcamp: Linux, Terminal & Bash and Networking complete; now on Practical Cybersecurity (recon, web vulnerabilities, CTFs and a full pentest report).",
+           fr:"Bootcamp cybersécurité de 90 jours : Linux, Terminal & Bash et Réseaux terminés ; en cours, Cybersécurité pratique (reconnaissance, vulnérabilités web, CTF et rapport de pentest complet)." } },
 ];
 
 /* =====================================================================
@@ -84,6 +89,7 @@ const SKILLS = [
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fill = (str, o) => str.replace(/\{(\w)\}/g, (_, k) => o[k] ?? '');
 const store = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
                 set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} } };
 
@@ -109,7 +115,7 @@ function applyLang(){
   lb.textContent = t('js.langBtn');
   lb.setAttribute('aria-label', t('js.langLabel'));
   $('#flip')?.setAttribute('aria-label', t('js.flip'));
-  renderLatest(); renderAll(); renderSkills(); renderCerts(); updateThemeBtn();
+  renderLatest(); renderAll(); renderSkills(); renderCerts(); renderLearning(); updateThemeBtn(); if (typeof tickClock === 'function') tickClock(); document.dispatchEvent(new Event('langchange'));
   if (openIndex > -1) openProject(openIndex);
 }
 $('#langBtn').addEventListener('click', () => {
@@ -186,18 +192,36 @@ const titleHTML = p => {
   return `${esc(text.slice(0, cut))}<span class="nowrap">${esc(text.slice(cut))}&nbsp;<span class="pemoji" aria-hidden="true">${p.emoji}</span></span>`;
 };
 
+/* Every project is shown as a service desk ticket */
+const TK_PREFIX = { sec:'SEC', cloud:'CLD', ai:'AI', infra:'INF', data:'DAT', web:'WEB' };
+const TK_STATE  = { done:'js.tkDone', wip:'js.tkWip', ongoing:'js.tkOngoing', plan:'js.tkPlan' };
+const ticketIds = new Map();
+(() => {
+  const seen = {};
+  [...PROJECTS].reverse().forEach(p => {            // oldest first, so numbers grow over time
+    const base = `${TK_PREFIX[p.cat]}-${p.date.slice(2,4)}${p.date.slice(5,7)}`;
+    seen[base] = (seen[base] || 0) + 1;
+    ticketIds.set(p, `${base}-${String(seen[base]).padStart(2,'0')}`);
+  });
+})();
+const tkState = p => `<span class="tk-state st-${p.status}"><i class="sdot ${STATUS[p.status]}"></i>${esc(t(TK_STATE[p.status]))}</span>`;
+
 function projectCard(p){
   const i = PROJECTS.indexOf(p);
   const extra = p.tags.length - SHOW_TAGS;
   return `
-  <article class="card pcard">
+  <article class="card pcard ticket st-${p.status}">
+    <div class="tk-head"><span class="tk-id">#${esc(ticketIds.get(p))}</span>${tkState(p)}</div>
     <span class="plabel">${esc(p.label[lang])}</span>
     <h3><button class="ptitle" type="button" data-open="${i}">${titleHTML(p)}</button></h3>
-    <div class="pchips">${statusChip(p)}<span class="chip">${esc(WITH[p.with].chip[lang])}</span></div>
+    <dl class="tk-meta">
+      <div><dt>${esc(t('js.tkReq'))}</dt><dd>${esc(WITH[p.with].chip[lang])}</dd></div>
+      <div><dt>${esc(t('js.tkOpened'))}</dt><dd>${esc(fmtDate(p.date))}</dd></div>
+    </dl>
     <p class="pdesc">${esc(p.desc[lang])}</p>
     <div class="ptags">${p.tags.slice(0, SHOW_TAGS).map(x => `<span class="ptag">${esc(x)}</span>`).join('')}${extra > 0 ? `<span class="ptag more">+${extra}</span>` : ''}</div>
     <div class="pfoot">
-      <button class="pview" type="button" data-open="${i}">${esc(t('js.view'))}</button>
+      <button class="pview" type="button" data-open="${i}">${esc(t('js.tkView'))}</button>
       ${p.repo ? `<a class="pcode" href="${esc(p.repo)}" target="_blank" rel="noopener" aria-label="${esc(t('js.code'))}">${CODE_ICON}</a>` : ''}
     </div>
   </article>`;
@@ -211,12 +235,19 @@ let openIndex = -1;
 function openProject(i){
   const p = PROJECTS[i]; openIndex = i;
   modal.innerHTML = `
-    <div class="pm-head">
-      <span class="plabel">${esc(p.label[lang])}</span>
-      <button class="pm-close" type="button" aria-label="${esc(t('js.close'))}">✕</button>
+    <div class="pm-head tk-head">
+      <span class="tk-id">#${esc(ticketIds.get(p))}</span>
+      <span class="pm-right">${tkState(p)}<button class="pm-close" type="button" aria-label="${esc(t('js.close'))}">✕</button></span>
     </div>
+    <span class="plabel">${esc(p.label[lang])}</span>
     <h3>${titleHTML(p)}</h3>
-    <div class="pchips">${statusChip(p)}<span class="chip">${esc(WITH[p.with].chip[lang])}</span><span class="chip">${esc(CATS[p.cat][lang])}</span></div>
+    <dl class="tk-grid">
+      <div><dt>${esc(t('js.tkReq'))}</dt><dd>${esc(WITH[p.with].chip[lang])}</dd></div>
+      <div><dt>${esc(t('js.tkAssignee'))}</dt><dd>Zaafir</dd></div>
+      <div><dt>${esc(t('js.tkQueue'))}</dt><dd>${esc(CATS[p.cat][lang])}</dd></div>
+      <div><dt>${esc(t('js.tkOpened'))}</dt><dd>${esc(fmtDate(p.date))}</dd></div>
+    </dl>
+    <h4>${esc(t(p.status === 'done' ? 'js.tkResolution' : 'js.tkDetails'))}</h4>
     <p class="pm-desc">${esc(p.desc[lang])}</p>
     <h4>${esc(t('js.tools'))}</h4>
     <div class="ptags">${p.tags.map(x => `<span class="ptag">${esc(x)}</span>`).join('')}</div>
@@ -310,10 +341,43 @@ function loadLogos(scope = document){
   });
 }
 
+/* ---------- Learning tracker ---------- */
+function renderLearning(){
+  const grid = $('#learnGrid'); if (!grid || typeof LEARNING === 'undefined') return;
+  const [y, m] = LEARNING_UPDATED.split('-').map(Number);
+  $('#lnUpdated').textContent = t('js.lnUpdated').replace('{d}', new Intl.DateTimeFormat(lang === 'fr' ? 'fr-FR' : 'en-GB', { month:'long', year:'numeric' }).format(new Date(y, m - 1, 1)));
+  grid.innerHTML = LEARNING.map(c0 => {
+    let c = c0;
+    let pct = c.progress, endLabel = null;
+    if (c.start && c.end){                     // fill the bar by date
+      const toDate = v => { const [yy, mm] = v.split('-').map(Number); return new Date(yy, mm - 1, 1); };
+      const s0 = toDate(c.start), e0 = toDate(c.end);
+      pct = Math.round(Math.min(1, Math.max(0, (Date.now() - s0) / (e0 - s0))) * 100);
+      endLabel = t('js.lnEnds').replace('{d}', new Intl.DateTimeFormat(lang === 'fr' ? 'fr-FR' : 'en-GB', { month:'long', year:'numeric' }).format(e0));
+    }
+    c = { ...c, progress: pct, progressLabel: endLabel ? { [lang]: `${pct}% · ${endLabel}` } : c.progressLabel };
+    const hasPct = typeof c.progress === 'number';
+    const bar = hasPct
+      ? `<div class="ln-bar" role="progressbar" aria-valuenow="${c.progress}" aria-valuemin="0" aria-valuemax="100"><span style="--w:${c.progress}%"></span></div><span class="ln-pct">${c.progressLabel ? esc(c.progressLabel[lang]) : c.progress + '%'}</span>`
+      : `<div class="ln-bar ind" role="progressbar" aria-label="${esc(t('js.lnActive'))}"><span></span></div><span class="ln-pct">${esc(t('js.lnActive'))}</span>`;
+    const steps = c.steps ? `<ol class="ln-steps">${c.steps.map(st => `<li class="ln-${st.status}"><i aria-hidden="true"></i><span>${esc(st[lang])}</span><em>${esc(t('js.ln_' + st.status))}</em></li>`).join('')}</ol>` : '';
+    const covers = c.covers ? `<p class="ln-k">${esc(t('js.lnCovers'))}</p><ul class="ln-covers">${c.covers.map(x => `<li>${esc(x[lang])}</li>`).join('')}</ul>` : '';
+    return `
+    <article class="card ln-card">
+      <div class="cert-top"><div class="issuer"><span class="logo" data-logo="${esc(c.file)}" aria-hidden="true">${esc(c.logo)}</span><span>${esc(c.provider)} · ${esc(c.meta[lang])}</span></div></div>
+      <h3>${esc(c.title[lang])}</h3>
+      <div class="ln-progress">${bar}</div>
+      ${steps}${covers}
+      <div class="chips">${(c.tools || []).map(x => `<span class="c l">${esc(x)}</span>`).join('')}</div>
+    </article>`;
+  }).join('');
+  loadLogos(grid);
+}
+
 /* ---------- Skills ---------- */
 function renderSkills(){
-  if (!$('#skills')) return;
-  $('#skills').innerHTML = SKILLS.map(g => `
+  if (!$('#skillGrid')) return;
+  $('#skillGrid').innerHTML = SKILLS.map(g => `
     <div class="card"><h3>${esc(g[lang])}</h3>
       <div class="chips">${g.items.map(([en, fr, type]) => `<span class="c ${type}">${esc(lang === 'fr' ? fr : en)}</span>`).join('')}</div>
     </div>`).join('');
@@ -341,12 +405,88 @@ $$('[data-mail]').forEach(a => a.addEventListener('click', e => {
   location.href = 'mailto:' + MAIL;
 }));
 
+/* =====================================================================
+   V2 EXTRAS
+   ===================================================================== */
+
+/* Cursor spotlight: cards glow where the pointer is */
+document.addEventListener('pointermove', e => {
+  const el = e.target.closest?.('.spot, .card');
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+  el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+}, { passive:true });
+$$('.card').forEach(c => c.classList.add('spot'));
+
+/* Scroll progress bar + timeline fill */
+const progress = $('#progress'), timeline = $('#timeline'), tlFill = $('#tlFill');
+function onScroll(){
+  const doc = document.documentElement;
+  const max = doc.scrollHeight - innerHeight;
+  progress?.style.setProperty('--p', max > 0 ? (scrollY / max).toFixed(4) : 0);
+  if (timeline && tlFill){
+    const r = timeline.getBoundingClientRect();
+    const pct = Math.min(1, Math.max(0, (innerHeight * 0.6 - r.top) / r.height));
+    tlFill.style.setProperty('--fill', (pct * 100).toFixed(1) + '%');
+  }
+}
+addEventListener('scroll', onScroll, { passive:true });
+addEventListener('resize', onScroll);
+onScroll();
+
+/* Live London clock */
+function tickClock(){
+  const c = $('#clock'); if (!c) return;
+  const loc = lang === 'fr' ? 'fr-FR' : 'en-GB';
+  const now = new Date();
+  c.textContent = new Intl.DateTimeFormat(loc, { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false, timeZone:'Europe/London' }).format(now);
+  $('#clockDate').textContent = new Intl.DateTimeFormat(loc, { weekday:'long', day:'numeric', month:'long', timeZone:'Europe/London' }).format(now);
+}
+tickClock(); setInterval(tickClock, 1000);
+
+/* Skills: focus by source */
+document.addEventListener('click', e => {
+  const b = e.target.closest('.sk-switch .filter'); if (!b) return;
+  $$('.sk-switch .filter').forEach(x => x.setAttribute('aria-pressed', x === b));
+  const sk = $('#skillGrid'); if (sk) sk.dataset.src = b.dataset.src;
+});
+
+/* Highlight the current section in the menu (v2 sections) */
 /* ---------- Highlight the current section in the menu ---------- */
-const navLinks = $$('.links a');
+const navLinks = $$('.links a, .drawer-nav a');
 const spy = new IntersectionObserver(entries => entries.forEach(en => {
-  if (en.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + en.target.id));
+  if (en.isIntersecting) navLinks.forEach(a => {
+    const href = a.getAttribute('href');
+    if (href && href.startsWith('#')) a.classList.toggle('active', href === '#' + en.target.id);
+  });
 }), { rootMargin: '-45% 0px -50% 0px' });
 if ($('#about')) $$('main section').forEach(s => spy.observe(s));
+
+/* ---------- Mobile drawer ---------- */
+(function(){
+  const burger = $('#burger'), drawer = $('#drawer'), overlay = $('#drawerOverlay'), close = $('#drawerClose');
+  if (!burger || !drawer) return;
+  function openDrawer(){ drawer.classList.add('open'); overlay.classList.add('open'); burger.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }
+  function closeDrawer(){ drawer.classList.remove('open'); overlay.classList.remove('open'); burger.setAttribute('aria-expanded','false'); document.body.style.overflow=''; }
+  burger.addEventListener('click', ()=> drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+  close?.addEventListener('click', closeDrawer);
+  overlay?.addEventListener('click', closeDrawer);
+  drawer.querySelectorAll('a[href]').forEach(a => a.addEventListener('click', closeDrawer));
+  drawer.querySelectorAll('[data-term]').forEach(b => b.addEventListener('click', closeDrawer));
+  document.addEventListener('keydown', e => { if (e.key==='Escape' && drawer.classList.contains('open')) closeDrawer(); });
+
+  /* Mirror theme + lang buttons from drawer to main nav */
+  const lb2 = $('#langBtn2'), tb2 = $('#themeBtn2'), lb = $('#langBtn'), tb = $('#themeBtn');
+  lb2?.addEventListener('click', ()=> lb?.click());
+  tb2?.addEventListener('click', ()=> tb?.click());
+  /* Keep drawer sun/moon icons in sync */
+  new MutationObserver(()=>{
+    const moonH = tb?.querySelector('.i-moon')?.hidden;
+    const dm = tb2?.querySelector('.i-moon'), ds = tb2?.querySelector('.i-sun');
+    if(dm) dm.hidden = moonH; if(ds) ds.hidden = !moonH;
+  }).observe(tb, { attributes:true, subtree:true });
+})();
 
 /* ---------- Start ---------- */
 applyLang();
