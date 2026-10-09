@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zaafir | IT Professional</title>
+<meta name="description" content="Zaafir: IT professional building experience in Microsoft technologies, cybersecurity and AI and automation.">
+<meta property="og:title" content="Zaafir | IT Professional">
+<meta property="og:description" content="Microsoft technologies, cybersecurity and AI and automation. Projects, experience and certifications.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<!-- Apply the saved theme and language before the page draws, so it doesn't flash -->
+<script>
+  (function(){ try{
+    var theme=localStorage.getItem('theme'); if(theme) document.documentElement.setAttribute('data-theme',theme);
+    if(localStorage.getItem('lang')==='fr') document.documentElement.lang='fr';
+  }catch(e){} })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#main" data-i18n="skip">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ===================== NAVIGATION ===================== -->
+<nav aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">zaafir<span class="caret">_</span></a>
+    <div class="links">
+      <div class="nav-group">
+        <span class="nav-label" data-i18n="nav.g.me">About Me</span>
+        <a href="#experience" data-i18n="nav.exp">Experience</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
+        <a href="#credentials" data-i18n="nav.creds">Credentials</a>
+      </div>
+      <div class="nav-group">
+        <span class="nav-label" data-i18n="nav.g.work">My Work</span>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#lab" data-i18n="nav.lab">Lab</a>
+        <a href="#learning" data-i18n="nav.learn">Learning</a>
+      </div>
+      <a href="#contact" class="nav-cta" data-i18n="nav.contact">Contact</a>
+    </div>
+    <div class="controls">
+      <button class="cmd-btn" type="button" data-term aria-label="Open terminal"><span class="cmd-ico">&gt;_</span><span class="cmd-text" data-i18n="cmd.btn">Terminal</span><kbd>/</kbd></button>
+      <button class="icon-btn" id="langBtn" type="button" aria-label="Passer en français">FR</button>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch theme">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<aside class="drawer" id="drawer" aria-label="Menu">
+  <div class="drawer-head">
+    <span class="brand">zaafir<span class="caret">_</span></span>
+    <button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu">&times;</button>
+  </div>
+  <nav class="drawer-nav">
+    <div class="drawer-group">
+      <span class="drawer-label" data-i18n="nav.g.me">About Me</span>
+      <a href="#experience" data-i18n="nav.exp">Experience</a>
+      <a href="#skills" data-i18n="nav.skills">Skills</a>
+      <a href="#credentials" data-i18n="nav.creds">Credentials</a>
+    </div>
+    <div class="drawer-group">
+      <span class="drawer-label" data-i18n="nav.g.work">My Work</span>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#lab" data-i18n="nav.lab">Lab</a>
+      <a href="#learning" data-i18n="nav.learn">Learning</a>
+    </div>
+    <div class="drawer-group">
+      <span class="drawer-label" data-i18n="nav.g.connect">Connect</span>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+      <a href="https://www.linkedin.com/in/zaafir-exe/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="https://github.com/zaafirrr" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </nav>
+  <div class="drawer-foot">
+    <button class="cmd-btn" type="button" data-term><span class="cmd-ico">&gt;_</span><span data-i18n="cmd.btn">Terminal</span></button>
+    <div class="drawer-toggles">
+      <button class="icon-btn" id="langBtn2" type="button" aria-label="Passer en français">FR</button>
+      <button class="icon-btn" id="themeBtn2" type="button" aria-label="Switch theme">
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </div>
+</aside>
+
+<main id="main">
+<!-- ===================== HERO (bento grid) ===================== -->
+<header class="wrap bento" id="top">
+  <div class="tile t-intro spot">
+    <div class="badges">
+      <span class="badge">📍 <span data-i18n="hero.location">London, UK</span></span>
+      <span class="badge live" data-i18n="hero.status">Open to opportunities</span>
+    </div>
+    <h1>Zaafir</h1>
+    <p class="headline">
+      <span data-i18n="hero.h1">IT Professional</span><span data-i18n="hero.h2">Microsoft Technologies</span><span data-i18n="hero.h3">Cybersecurity</span><span data-i18n="hero.h4">AI &amp; Automation</span>
+    </p>
+    <p class="lede" data-i18n="hero.lede">I'm building practical experience across IT operations, Microsoft technologies, cybersecurity and AI and automation. I like getting to the bottom of technical problems, finding fixes that work, and learning how technology can make everyday business processes better.</p>
+    <div class="ctas">
+      <a class="btn primary" href="#contact" data-i18n="cta.contact">Get in touch</a>
+      <a class="btn" href="https://www.linkedin.com/in/zaafir-exe/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn" href="https://github.com/zaafirrr" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+
+  <div class="tile t-flip">
+  <button class="flip" id="flip" type="button" aria-pressed="false" aria-label="Flip card to see contact links">
+    <div class="flip-inner">
+      <div class="face front">
+        <div class="monogram" aria-hidden="true">Z</div>
+        <div class="face-meta">
+          <div><b>Zaafir</b><span data-i18n="card.role">Service Desk Analyst · Zinath Solutions</span></div>
+          <span class="hint" data-i18n="card.hint">Click to flip ↻</span>
+        </div>
+      </div>
+      <div class="face back">
+        <h3 data-i18n="card.backTitle">Let's Connect</h3>
+        <p data-i18n="card.backText">The quickest ways to reach me.</p>
+        <div class="back-links">
+          <a href="https://www.linkedin.com/in/zaafir-exe/" target="_blank" rel="noopener" tabindex="-1">LinkedIn <span>in/zaafir-exe</span></a>
+          <a href="https://github.com/zaafirrr" target="_blank" rel="noopener" tabindex="-1">GitHub <span>zaafirrr</span></a>
+          <a href="#contact" data-mail tabindex="-1">Email <span data-i18n="card.emailSub">Send a message</span></a>
+        </div>
+        <span class="hint" data-i18n="card.hintBack">Click to flip back ↻</span>
+      </div>
+    </div>
+  </button>
+  </div>
+
+  <div class="tile t-clock spot">
+    <span class="k" data-i18n="clock.label">Local time · London</span>
+    <b class="clock" id="clock">--:--</b>
+    <span class="clock-sub" id="clockDate">&nbsp;</span>
+    <p class="now" data-i18n="hero.now"><b>Right now:</b> Service Desk Analyst at Zinath Solutions, studying for an AI &amp; Automation Apprenticeship.</p>
+  </div>
+
+  <button class="tile t-term spot" type="button" data-term aria-label="Open the terminal">
+    <span class="term-bar"><i></i><i></i><i></i><span>zaafir@portfolio: ~</span></span>
+    <span class="term-lines">
+      <span><em>$</em> whoami</span>
+      <span class="out">zaafir · IT support · cloud · security</span>
+      <span><em>$</em> status</span>
+      <span class="out ok">● open to opportunities</span>
+      <span><em>$</em> <span class="cursor"></span></span>
+    </span>
+    <span class="term-hint" data-i18n="term.teaser">Click or press <kbd>/</kbd> to open the terminal</span>
+  </button>
+
+  <a class="tile t-stat spot" href="#experience"><span data-i18n="stat.exp">Experience</span><b data-i18n="stat.expv">Since 2024</b></a>
+  <a class="tile t-stat spot" href="#credentials"><span data-i18n="stat.cert">Certifications</span><b id="certCount">7</b></a>
+  <a class="tile t-stat spot" href="projects.html"><span data-i18n="stat.proj">Projects</span><b class="projCount">16</b></a>
+</header>
+
+<!-- ===================== LOGO STRIP ===================== -->
+<div class="strip" aria-label="Organisations I've worked or learned with">
+  <p class="strip-label" data-i18n="strip.label">Worked and learned with</p>
+  <div class="strip-track"><div class="strip-row"><span class="strip-item"><span class="logo" data-logo="zinath" aria-hidden="true">ZS</span>Zinath Solutions</span><span class="strip-item"><span class="logo" data-logo="microsoft" aria-hidden="true">MS</span>Microsoft</span><span class="strip-item"><span class="logo" data-logo="easydmarc" aria-hidden="true">ED</span>EasyDMARC</span><span class="strip-item"><span class="logo" data-logo="mastercard" aria-hidden="true">MC</span>Mastercard</span><span class="strip-item"><span class="logo" data-logo="oracle" aria-hidden="true">OR</span>Oracle</span><span class="strip-item"><span class="logo" data-logo="fujitsu" aria-hidden="true">FJ</span>Fujitsu</span><span class="strip-item"><span class="logo" data-logo="cisco" aria-hidden="true">CI</span>Cisco</span><span class="strip-item"><span class="logo" data-logo="open-university" aria-hidden="true">OU</span>The Open University</span><span class="strip-item"><span class="logo" data-logo="aws" aria-hidden="true">AWS</span>Amazon Web Services</span><span class="strip-item"><span class="logo" data-logo="hackpath" aria-hidden="true">HP</span>HackPath</span></div><div class="strip-row" aria-hidden="true"><span class="strip-item"><span class="logo" data-logo="zinath" aria-hidden="true">ZS</span>Zinath Solutions</span><span class="strip-item"><span class="logo" data-logo="microsoft" aria-hidden="true">MS</span>Microsoft</span><span class="strip-item"><span class="logo" data-logo="easydmarc" aria-hidden="true">ED</span>EasyDMARC</span><span class="strip-item"><span class="logo" data-logo="mastercard" aria-hidden="true">MC</span>Mastercard</span><span class="strip-item"><span class="logo" data-logo="oracle" aria-hidden="true">OR</span>Oracle</span><span class="strip-item"><span class="logo" data-logo="fujitsu" aria-hidden="true">FJ</span>Fujitsu</span><span class="strip-item"><span class="logo" data-logo="cisco" aria-hidden="true">CI</span>Cisco</span><span class="strip-item"><span class="logo" data-logo="open-university" aria-hidden="true">OU</span>The Open University</span><span class="strip-item"><span class="logo" data-logo="aws" aria-hidden="true">AWS</span>Amazon Web Services</span><span class="strip-item"><span class="logo" data-logo="hackpath" aria-hidden="true">HP</span>HackPath</span></div></div>
+</div>
+
+<!-- ===================== PROFILE ===================== -->
+<section id="about">
+  <div class="wrap about">
+    <div class="about-lead">
+      <span class="eyebrow" data-i18n="about.eyebrow">Profile_</span>
+      <h2 data-i18n="about.title">Who I Am</h2>
+      <p class="big" data-i18n="about.sub">IT support professional growing into cloud, security and automation.</p>
+    </div>
+    <div class="about-list">
+      <article class="card spot"><span class="k" data-i18n="about.k1">what I do</span><h3 data-i18n="about.t1">Keep People Working</h3><p data-i18n="about.p1">I support colleagues and clients with day-to-day IT, system and data issues, working across Microsoft 365, Entra ID and email security.</p></article>
+      <article class="card spot"><span class="k" data-i18n="about.k2">how I work</span><h3 data-i18n="about.t2">Understand, Fix, Document</h3><p data-i18n="about.p2">I dig into the cause of a problem, find a practical fix, and keep clear records so the next person can follow what was done.</p></article>
+      <article class="card spot"><span class="k" data-i18n="about.k3">what I'm looking for</span><h3 data-i18n="about.t3">Room to Grow</h3><p data-i18n="about.p3">Opportunities in IT support, service desk, cloud, cybersecurity, and AI and automation, where I can keep learning on real work.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPERIENCE (timeline) ===================== -->
+<section id="experience">
+  <div class="wrap split">
+    <div class="split-head">
+      <span class="eyebrow" data-i18n="exp.eyebrow">Experience_</span>
+      <h2 data-i18n="exp.title">Where I've Worked</h2>
+      <p data-i18n="exp.sub">From administration to the service desk, plus three work experience internships.</p>
+    </div>
+    <div class="timeline" id="timeline">
+      <div class="tl-line" aria-hidden="true"><div class="tl-fill" id="tlFill"></div></div>
+      <article class="entry">
+        <div class="logo" data-logo="zinath" aria-hidden="true">ZS</div>
+        <div>
+          <div class="entry-top"><h3>Zinath Solutions Limited</h3><span class="when" data-i18n="zs.when">Apr 2022 – Present</span></div>
+          <p class="sub" data-i18n="zs.sub">Managed service provider supporting business clients, including organisations with international operations</p>
+          <div class="meta"><span data-i18n="zs.m1">Part-time</span><span data-i18n="zs.m2">London Area, UK</span></div>
+
+          <div class="role">
+            <div class="role-head"><h4 data-i18n="zs.r1">Service Desk Analyst</h4><span class="when" data-i18n="zs.r1when">Apr 2024 – Present</span></div>
+            <p data-i18n="zs.r1sum">Day-to-day technical support for colleagues and clients, alongside IT and cybersecurity project work.</p>
+            <details class="more"><summary data-i18n="exp.more">Show responsibilities</summary><div class="groups">
+              <div><h5 data-i18n="zs.g1">Service Desk</h5><ul>
+                <li data-i18n="zs.g1a">Resolving IT, system and data-related issues for colleagues and clients</li>
+                <li data-i18n="zs.g1b">Troubleshooting user problems and keeping support records accurate</li>
+                <li data-i18n="zs.g1c">Keeping systems and information up to date</li></ul></div>
+              <div><h5 data-i18n="zs.g2">Microsoft 365 &amp; Entra ID</h5><ul>
+                <li data-i18n="zs.g2a">Licence management and tenant administration</li>
+                <li data-i18n="zs.g2b">Exposure to Intune device configuration and Microsoft Defender</li>
+                <li data-i18n="zs.g2c">Conditional Access and identity concepts</li></ul></div>
+              <div><h5 data-i18n="zs.g3">Cybersecurity Projects</h5><ul>
+                <li data-i18n="zs.g3a">Helped prepare and track an Aramco CCC assessment: organising controls, coordinating tasks and tracking evidence</li>
+                <li data-i18n="zs.g3b">Supporting email security work on SPF, DKIM and DMARC</li>
+                <li data-i18n="zs.g3c">Cyber Essentials concepts, Redstor and CyberSentriq platforms</li></ul></div>
+              <div><h5 data-i18n="zs.g4">Business Operations</h5><ul>
+                <li data-i18n="zs.g4a">Expense reports, invoices and VAT returns</li>
+                <li data-i18n="zs.g4b">Managing business data in Excel and Microsoft Office</li></ul></div>
+            </div></details>
+          </div>
+
+          <div class="role">
+            <div class="role-head"><h4 data-i18n="zs.r2">Assistant Administrator</h4><span class="when" data-i18n="zs.r2when">Apr 2022 – Apr 2024</span></div>
+            <p data-i18n="zs.r2sum">Supported the day-to-day running of the business across administrative, financial and organisational tasks, alongside the company's IT work.</p>
+            <details class="more"><summary data-i18n="exp.more">Show responsibilities</summary><div class="groups">
+              <div><h5 data-i18n="zs.r2g1">Administration &amp; Finance</h5><ul>
+                <li data-i18n="zs.r2a">Kept records and documentation accurate, organised and up to date</li>
+                <li data-i18n="zs.r2b">Handled expense reports, invoices and VAT returns</li>
+                <li data-i18n="zs.r2c">Managed data and maintained databases in Excel and Microsoft Office</li></ul></div>
+              <div><h5 data-i18n="zs.r2g2">IT Support</h5><ul>
+                <li data-i18n="zs.r2d">Helped with client requests and troubleshooting technical and system issues</li>
+                <li data-i18n="zs.r2e">Created and maintained websites using Wix</li></ul></div>
+            </div></details>
+            <div class="meta" style="margin:4px 0 0"><span data-i18n="zs.sk1">Attention to detail</span><span data-i18n="zs.sk2">Customer service</span><span data-i18n="zs.sk3">Time management</span><span data-i18n="zs.sk4">Working independently</span><span data-i18n="zs.sk5">Prioritising</span></div>
+          </div>
+        </div>
+      </article>
+
+      <p class="tl-label" data-i18n="v.label">Work Experience · Springpod</p>
+
+      <article class="entry">
+        <div class="logo" data-logo="oracle" aria-hidden="true">OR</div>
+        <div>
+          <div class="entry-top"><h3 data-i18n="v1.title">Oracle Cyber Security Work Experience</h3><span class="when" data-i18n="v1.when">Aug 2026 – Sep 2026</span></div>
+          <div class="meta"><span>Springpod</span><span data-i18n="v.intern">Internship</span></div>
+          <p class="desc" data-i18n="v1.desc">Hands-on activities covering cybersecurity principles, threat identification, risk management and security best practice, and how organisations protect their systems, data and users. It strengthened my interest in cybersecurity and cloud security.</p>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="logo" data-logo="fujitsu" aria-hidden="true">FJ</div>
+        <div>
+          <div class="entry-top"><h3 data-i18n="v2.title">Fujitsu: Cloud Work Experience</h3><span class="when" data-i18n="v2.when">Nov 2024 – Dec 2024</span></div>
+          <div class="meta"><span>Springpod</span><span data-i18n="v.intern">Internship</span><span data-i18n="v.cert">Certificate of completion</span></div>
+          <p class="desc" data-i18n="v2.desc">Explored cloud computing services and how Fujitsu uses cloud solutions for its business clients, covering cloud architecture, deployment strategies and service management.</p>
+        </div>
+      </article>
+      <article class="entry">
+        <div class="logo" data-logo="fujitsu" aria-hidden="true">FJ</div>
+        <div>
+          <div class="entry-top"><h3 data-i18n="v3.title">Software Developer Work Experience</h3><span class="when" data-i18n="v3.when">Sep 2024 – Oct 2024</span></div>
+          <div class="meta"><span>Springpod</span><span data-i18n="v.intern">Internship</span></div>
+          <p class="desc" data-i18n="v3.desc">Worked through the software development lifecycle, from requirements and design to implementation, testing and deployment, with an introduction to version control, coding practice and agile methods.</p>
+        </div>
+      </article>
+    
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECTS ===================== -->
+<section id="projects">
+  <div class="wrap">
+    <div class="head row-head">
+      <div>
+        <span class="eyebrow" data-i18n="proj.eyebrow">Projects_</span>
+        <h2 data-i18n="proj.title">Latest Projects</h2>
+        <p data-i18n="proj.sub">My three most recent projects. Workplace examples are anonymised.</p>
+      </div>
+      <a class="btn primary" href="projects.html"><span data-i18n="proj.viewAll">View all projects</span> <span class="count-badge projCount">16</span> →</a>
+    </div>
+    <div class="pgrid three" id="pgrid"></div>
+  </div>
+</section>
+
+<!-- ===================== SECURITY LAB ===================== -->
+<section id="lab">
+  <div class="wrap">
+    <div class="head lab-head">
+      <span class="eyebrow" data-i18n="lab.eyebrow">Security Lab_</span>
+      <h2 data-i18n="lab.title">Try It Yourself</h2>
+      <p data-i18n="lab.sub">Two hands-on tools from my email security work. Pull apart an email's headers, or test your eye for phishing.</p>
+    </div>
+  </div>
+  <div id="headers">
+  <div class="wrap dm">
+    <div class="dm-intro">
+      <span class="eyebrow" data-i18n="hd.eyebrow">Tool_</span>
+      <h3 data-i18n="hd.title">Email Header Analyser</h3>
+      <p data-i18n="hd.sub">Paste the headers from a suspicious email to see whether it really came from who it says, the route it took, and any red flags.</p>
+      <p class="dm-note" data-i18n="hd.note">Analysed in your browser. Nothing is sent anywhere.</p>
+      <details class="more hd-how"><summary data-i18n="hd.howT">How do I get an email's headers?</summary>
+        <p data-i18n="hd.how">In Outlook: open the email, then File → Properties → Internet headers. In Gmail: open the email, then ⋮ → Show original. Copy everything and paste it here.</p></details>
+    </div>
+    <div class="card dm-tool">
+      <form id="hdForm" class="hd-form" novalidate>
+        <label class="field" for="hdInput"><span data-i18n="hd.label">Email headers</span>
+          <textarea id="hdInput" spellcheck="false" data-i18n-ph="hd.ph" placeholder="Received: from …&#10;Authentication-Results: …&#10;From: …"></textarea></label>
+        <div class="hd-actions">
+          <button class="btn primary" type="submit" data-i18n="hd.run">Analyse headers</button>
+          <button class="btn" type="button" data-sample="bad" data-i18n="hd.bad">Load suspicious sample</button>
+          <button class="btn" type="button" data-sample="good" data-i18n="hd.good">Load safe sample</button>
+          <button class="linkbtn" type="button" id="hdClear" data-i18n="hd.clear">Clear</button>
+        </div>
+      </form>
+      <div class="dm-out" id="hdOut" aria-live="polite">
+        <div class="hd-empty">
+          <div class="dm-row"><span class="dm-key">SPF</span><span class="dm-val" data-i18n="hd.wait">Waiting for headers…</span></div>
+          <div class="dm-row"><span class="dm-key">DKIM</span><span class="dm-val" data-i18n="hd.wait">Waiting for headers…</span></div>
+          <div class="dm-row"><span class="dm-key">DMARC</span><span class="dm-val" data-i18n="hd.wait">Waiting for headers…</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="wrap game-wrap" id="phish">
+    <div class="game-intro">
+      <span class="eyebrow" data-i18n="ph.eyebrow">Game_</span>
+      <h3 data-i18n="ph.title">Spot the Phish</h3>
+      <p data-i18n="ph.sub">Three emails. Click anything that looks suspicious, then decide: phishing or legitimate?</p>
+      <p class="dm-note" data-i18n="ph.note">Training simulation. All brands, people and addresses are made up.</p>
+    </div>
+    <div class="card game" id="game"></div>
+  </div>
+</section>
+
+<!-- ===================== SKILLS ===================== -->
+<section id="skills">
+  <div class="wrap">
+    <div class="head row-head">
+      <div>
+        <span class="eyebrow" data-i18n="sk.eyebrow">Skills_</span>
+        <h2 data-i18n="sk.title">Toolbox</h2>
+        <p data-i18n="sk.sub">Labelled by where each skill comes from. Use the switches to focus on one.</p>
+      </div>
+      <div class="sk-switch" role="group" aria-label="Show skills by source">
+        <button class="filter" type="button" data-src="all" aria-pressed="true" data-i18n="sk.all">All</button>
+        <button class="filter" type="button" data-src="w" aria-pressed="false"><i class="sw w"></i><span data-i18n="leg.w">Professional experience</span></button>
+        <button class="filter" type="button" data-src="s" aria-pressed="false"><i class="sw s"></i><span data-i18n="leg.s">Studied</span></button>
+        <button class="filter" type="button" data-src="l" aria-pressed="false"><i class="sw l"></i><span data-i18n="leg.l">Currently learning</span></button>
+      </div>
+    </div>
+    <div class="sk" id="skillGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== LEARNING TRACKER ===================== -->
+<section id="learning">
+  <div class="wrap">
+    <div class="head row-head">
+      <div>
+        <span class="eyebrow" data-i18n="ln.eyebrow">Currently learning_</span>
+        <h2 data-i18n="ln.title">Learning Tracker</h2>
+        <p data-i18n="ln.sub">What I'm studying right now and how far along I am.</p>
+      </div>
+      <span class="ln-updated" id="lnUpdated"></span>
+    </div>
+    <div class="ln-grid" id="learnGrid"></div>
+  </div>
+</section>
+
+<!-- ===================== CREDENTIALS ===================== -->
+<section id="credentials">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-i18n="cred.eyebrow">Credentials_</span>
+      <h2 data-i18n="cred.title">Education &amp; Certifications</h2>
+    </div>
+    <div class="edu-one">
+        <div class="card">
+          <span class="k" data-i18n="edu.k3">education</span>
+          <div class="entry-top"><h3 style="font-size:20px" data-i18n="edu.btec">BTEC Level 3 National Extended Diploma in Information Technology</h3></div>
+          <p class="grade" style="margin:8px 0 6px">D*D</p>
+          <p style="color:var(--muted);font-size:15px" data-i18n="edu.btecSub">Cybersecurity and IT security, Python, IT systems, project management, HTML web development, Photoshop and Illustrator, Autodesk Maya, Microsoft Access, Excel spreadsheet modelling, business use of social media</p>
+        </div>
+      </div>
+    <p class="group-label" data-i18n="edu.k2">Certifications &amp; Courses</p>
+    <div class="cgrid" id="certs"></div>
+  </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section id="contact">
+  <div class="wrap">
+    <div class="head">
+      <span class="eyebrow" data-i18n="contact.eyebrow">Contact_</span>
+      <h2 data-i18n="contact.title">Let's Talk</h2>
+      <p data-i18n="contact.sub">Interested in IT support, service desk, cloud, cybersecurity and AI and automation roles.</p>
+    </div>
+    <div class="contact">
+      <form class="card" id="cform" novalidate>
+        <div class="choice" role="radiogroup" aria-label="Topic">
+          <label><input type="radio" name="topic" id="topic-role" value="role" checked><span data-i18n="form.t1">A role</span></label>
+          <label><input type="radio" name="topic" id="topic-proj" value="project"><span data-i18n="form.t2">A project</span></label>
+          <label><input type="radio" name="topic" id="topic-other" value="other"><span data-i18n="form.t3">Something else</span></label>
+        </div>
+        <label class="field" for="f-name"><span data-i18n="form.name">Your name</span><input id="f-name" required autocomplete="name"></label>
+        <label class="field" for="f-msg"><span data-i18n="form.msg">Message</span><textarea id="f-msg" required data-i18n-ph="form.msgPh" placeholder="Role, team, timing…"></textarea></label>
+        <button class="btn primary" type="submit" data-i18n="form.send">Open in my email app</button>
+        <p class="form-note" id="fnote" aria-live="polite" data-i18n="form.note">This opens your email app with the message ready to send.</p>
+      </form>
+
+      <div class="channels">
+        <div class="card channel">
+          <div><b>Email</b><span data-i18n="ch.emailSub">Send me a message</span></div>
+          <a class="btn" href="#contact" data-mail data-i18n="ch.write">Write ↗</a>
+        </div>
+        <div class="card channel">
+          <div><b>LinkedIn</b><span>linkedin.com/in/zaafir-exe</span></div>
+          <a class="btn" href="https://www.linkedin.com/in/zaafir-exe/" target="_blank" rel="noopener" data-i18n="ch.open">Open ↗</a>
+        </div>
+        <div class="card channel">
+          <div><b>GitHub</b><span>github.com/zaafirrr</span></div>
+          <a class="btn" href="https://github.com/zaafirrr" target="_blank" rel="noopener" data-i18n="ch.open">Open ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 Zaafir</span><span class="foot-hint" data-i18n="foot.hint">Tip: press <kbd>/</kbd> to open the terminal</span><a href="#top" data-i18n="foot.top">Back to top ↑</a></div>
+</footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/projects-data.js"></script>
+<script src="js/learning-data.js"></script>
+<script src="js/main.js"></script>
+<script src="js/terminal.js"></script>
+<script src="js/headers.js"></script>
+<script src="js/phishing.js"></script>
+</body>
+</html>
