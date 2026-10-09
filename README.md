@@ -1,50 +1,86 @@
-# Zaafir — Portfolio
+# Zaafir — IT Portfolio
 
-My personal portfolio website: experience, skills, certifications and projects.
-Live at **https://zaafirrr.github.io**
+My personal portfolio website, covering my experience, skills, certifications and projects across IT support, Microsoft technologies, cybersecurity and AI and automation.
 
-Plain HTML, CSS and JavaScript. No build step, no frameworks.
+**Live site:** https://zaafirrr.github.io/portfolio/
+
+[LinkedIn](https://www.linkedin.com/in/zaafir-exe/) · [GitHub](https://github.com/zaafirrr)
+
+---
+
+## About this site
+
+- Built with plain **HTML, CSS and JavaScript**, with no frameworks and no build step
+- Hosted for free on **GitHub Pages**
+- Works on desktop, tablet and mobile
+- Supports light and dark mode automatically
+- Projects are labelled **Completed**, **In progress** or **Planned**
+- Workplace examples are anonymised
 
 ## Files
 
 ```
-index.html            The homepage (all the sections)
-css/style.css         All styling: colours, fonts, layout, light/dark mode
-js/main.js            The project list, skills list and copy-email button
-projects/_template.html   Copy this to write up a project
-assets/favicon.svg    Browser tab icon (put screenshots here too)
-.nojekyll             Tells GitHub Pages to serve the files as they are
+index.html                The homepage (all sections)
+css/style.css             Styling: colours, fonts, layout, light/dark mode
+js/main.js                Project list, skills list and copy-email button
+projects/_template.html   Template for writing up a project
+assets/favicon.svg        Browser tab icon (put screenshots here too)
+.nojekyll                 Tells GitHub Pages to serve the files as they are
+README.md                 This file
 ```
+
+The folder structure matters. The page looks for `css/style.css` and `js/main.js`, so if those files sit in the wrong place the site loads with no styling.
 
 ## Preview on your computer
 
-Double-click `index.html` to open it in your browser. That's all you need.
+Download or clone the repository and double-click `index.html` to open it in a browser.
 
-If you use VS Code, the **Live Server** extension reloads the page every time you save.
+If you use VS Code, the **Live Server** extension refreshes the page every time you save.
 
 ## Common edits
 
-**Add a project to the homepage** — open `js/main.js`, copy one `{ ... }` block in the
-`PROJECTS` list and change the text. Set `status` to `"done"`, `"wip"` or `"plan"`.
+### Add a project to the homepage
+Open `js/main.js` and find the `PROJECTS` list. Copy one `{ ... }` block and edit it:
 
-**Write up a project** — copy `projects/_template.html`, rename it
-(e.g. `projects/linux-lab.html`), fill in the sections, then add
-`page: "projects/linux-lab.html"` to that project in `js/main.js`. Its title becomes a link.
+```js
+{title:"Linux security lab", cat:"IT & Infrastructure", status:"wip", kind:"Personal project",
+ desc:"One or two sentences about the project.",
+ tags:["Ubuntu","Linux"]},
+```
 
-**Add or change a skill** — edit the `SKILLS` list in `js/main.js`.
-`w` = professional experience, `s` = studied, `l` = currently learning.
+- `status`: `"done"` (Completed), `"wip"` (In progress) or `"plan"` (Planned)
+- `cat`: one of `IT & Infrastructure`, `Cybersecurity`, `Cloud & Microsoft`, `AI & Automation`, `Data & Programming`
 
-**Change the text** in experience, certifications or the intro — edit `index.html` directly.
+### Write up a project in full
+1. Copy `projects/_template.html` and rename the copy, e.g. `projects/linux-lab.html`
+2. Fill in the ten sections: overview, problem, objectives, tools, my role, method, testing, results, evidence and links
+3. In `js/main.js`, add `page:"projects/linux-lab.html"` to that project. Its title becomes a link.
 
-**Change colours** — edit the variables at the top of `css/style.css`
-(`--accent` is the blue).
+### Add or change a skill
+Edit the `SKILLS` list in `js/main.js`:
+- `w` = professional experience
+- `s` = studied (BTEC)
+- `l` = currently learning
 
-## Publish an update
+### Change text
+Experience, certifications, education and the intro are all in `index.html`. Edit the text between the tags.
 
-Edit the files, then commit and push to GitHub (or upload the changed files on
-github.com). The live site updates within a minute or two.
+### Change colours
+Edit the variables at the top of `css/style.css`. `--accent` is the blue.
 
-## Rules for this repo
+## Updating the live site
 
-This repository is public. Never commit passwords, API keys, client names,
-tenant details, internal screenshots or customer data.
+**On github.com:** open a file, click the pencil icon, make the change, then click **Commit changes**. The site updates within a minute or two. Press Ctrl+F5 to see it.
+
+**Uploading new files:** use **Add file → Upload files**. If GitHub drops the folder names, open the file, click the pencil icon and type the folder name and a slash before the filename (e.g. `css/`) to move it into place.
+
+## Rules for this repository
+
+This repository is **public**. Never commit:
+- passwords, API keys or secrets
+- client names, tenant IDs or internal configuration
+- screenshots from work systems or customer data
+
+---
+
+© 2026 Zaafir
