@@ -66,7 +66,7 @@ To link a skill to projects, add it to `SKILL_PROJECTS` (skill name → project 
 
 ## Fonts
 
-The page asks for **Clash Display / Clash Grotesk** (Fontshare) and falls back to Archivo and Instrument Sans (Google Fonts) if those fail to load. Both are linked in the `<head>` of each page, so nothing to install. To self-host, download the font files into `assets/fonts/` and replace the `<link>` tags with `@font-face` rules.
+Headings use **Archivo** and body text uses **Instrument Sans**, with **JetBrains Mono** for small technical text. All three load from Google Fonts via the `<link>` in the `<head>` of each page, so there's nothing to install. To change them, edit `--display` and `--body` at the top of `css/style.css` and update that `<link>`.
 
 ## Updating the live site
 
