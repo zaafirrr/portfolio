@@ -1,6 +1,6 @@
 # Zaafir — IT Portfolio
 
-My personal portfolio website, covering my experience, skills, certifications and projects across IT support, Microsoft technologies, cybersecurity and AI and automation.
+My personal portfolio website: experience, skills, certifications, projects and a small security lab.
 
 **Live site:** https://zaafirrr.github.io/portfolio/
 
@@ -10,78 +10,72 @@ My personal portfolio website, covering my experience, skills, certifications an
 
 ## About this site
 
-- Built with plain **HTML, CSS and JavaScript**, with no frameworks and no build step
-- Hosted for free on **GitHub Pages**
-- Works on desktop, tablet and mobile
-- Supports light and dark mode automatically
-- Projects are labelled **Completed**, **In progress** or **Planned**
+- Plain **HTML, CSS and JavaScript**: no frameworks, no build step
+- Hosted free on **GitHub Pages**
+- English and French (button in the top bar)
+- Light and dark themes, desktop and mobile layouts
 - Workplace examples are anonymised
 
 ## Files
 
 ```
-index.html                The homepage
-projects.html             The All Projects page (filters by year, category, who with)
-css/style.css             Styling: colours, fonts, layout, light/dark mode, animations
-js/projects-data.js       All projects — add new ones here
-js/main.js                Certifications, skills, and everything that makes the site work
-js/i18n.js                French translations
-js/terminal.js            The terminal (press / on the site) and its commands
-js/dmarc.js               The live DMARC checker
-projects/_template.html   Template for a full project write-up (optional)
-assets/favicon.svg        Browser tab icon
-assets/logos/             Company logos (see assets/logos/README.md for file names)
-.nojekyll                 Tells GitHub Pages to serve the files as they are
-README.md                 This file
+index.html                 Homepage
+projects.html              All Projects (year ledger with filters)
+certifications.html        All Certifications (with filters)
+css/style.css              All styling and design tokens
+js/main.js                 Core: skills, certificates, clock/weather, pop-ups
+js/i18n.js                 English / French text
+js/projects-data.js        PROJECTS list  ← edit to add projects
+js/learning-data.js        LEARNING list  ← edit the Learning section and the "Currently" strip
+js/terminal.js             Terminal (press / on the site)
+js/phishing.js             Lab: Spot the Phish
+js/dns.js                  Lab: DNS & Email Checker (live lookups)
+js/ca.js                   Lab: Conditional Access Builder
+js/triage.js               Lab: Ticket Triage Game
+js/interactions.js         Interactions (cursor, tilt and similar)
+js/motion.js               Scroll and entrance motion
+assets/                    Favicon, share image (og.png), CVs, logos
+projects/_template.html    Optional template for a full project write-up
+.nojekyll                  Tells GitHub Pages to serve files as they are
 ```
 
-The folder structure matters. If a file sits in the wrong folder, the page loads without its styling or content.
+Keep the folder structure as it is. If a file sits in the wrong folder the page loads without styling or content.
 
 ## Preview on your computer
 
-Download or clone the repository and double-click `index.html` to open it in a browser.
-
-If you use VS Code, the **Live Server** extension refreshes the page every time you save.
+Double-click `index.html`, or in the folder run `python3 -m http.server 8000` and open http://localhost:8000.
+(Weather and the DNS checker need internet.)
 
 ## Common edits
 
-### Add a project
-Open `js/projects-data.js`, copy one `{ ... }` block and edit it. Newest projects
-appear first; the homepage shows the latest 3 and `projects.html` shows them all.
+**Add a project** — `js/projects-data.js`: copy one `{ ... }` block. Fields: `date` ("YYYY-MM"), `status` (`done`, `wip`, `ongoing`, `plan`), `cat`, `with`, `repo` (optional), plus English and French text.
+The newest `wip` project appears in the "Currently" strip automatically.
 
-- `date`: `"YYYY-MM"`
-- `status`: `"done"`, `"wip"`, `"ongoing"` or `"plan"`
-- `cat`: `ai`, `sec`, `cloud`, `infra`, `data` or `web`
-- `with`: `personal`, `client`, `zinath`, `apprenticeship` or `education`
-- `repo`: a GitHub link (optional) — adds the code button to the card
+**Add a certification** — `js/main.js`: copy a block in the `CERTS` list (skills shown in the pop-up come from `CERT_SKILLS` in the same file).
 
-### Add a certification
-Open `js/main.js`, find the `CERTS` list near the top and copy one block.
+**Add or change a skill** — `js/main.js`, `SKILLS` list: `w` = work experience, `s` = studied, `l` = learning.
+To link a skill to projects, add it to `SKILL_PROJECTS` (skill name → project titles). Only link projects that really used it.
 
-### Add or change a skill
-Edit the `SKILLS` list in `js/main.js`:
-- `w` = professional experience
-- `s` = studied
-- `l` = currently learning
+**Update Learning / Currently** — `js/learning-data.js`. Change the dates, progress and steps, and set `LEARNING_UPDATED`.
 
-### Change text
-Experience, certifications, education and the intro are all in `index.html`. Edit the text between the tags.
+**City pop-ups (London, Paris, Dubai, Pondichéry)** — `js/main.js`: `PLACES` (text), `WX_CITIES` (time zone and coordinates).
 
-### Change colours
-Edit the variables at the top of `css/style.css`. `--accent` is the blue.
+**Contact email** — set in `js/main.js` (`MAIL`), kept out of the page source on purpose. Do not write it into the HTML files.
+
+**Colours** — variables at the top of `css/style.css`.
+
+## Fonts
+
+The page asks for **Clash Display / Clash Grotesk** (Fontshare) and falls back to Archivo and Instrument Sans (Google Fonts) if those fail to load. Both are linked in the `<head>` of each page, so nothing to install. To self-host, download the font files into `assets/fonts/` and replace the `<link>` tags with `@font-face` rules.
 
 ## Updating the live site
 
-**On github.com:** open a file, click the pencil icon, make the change, then click **Commit changes**. The site updates within a minute or two. Press Ctrl+F5 to see it.
-
-**Uploading new files:** use **Add file → Upload files**. If GitHub drops the folder names, open the file, click the pencil icon and type the folder name and a slash before the filename (e.g. `css/`) to move it into place.
+On github.com: open a file, click the pencil, edit, **Commit changes**. The site updates in a minute or two (Ctrl+F5 to refresh).
+From your computer, see the steps in the handover message: `git add . && git commit -m "..." && git push`.
 
 ## Rules for this repository
 
-This repository is **public**. Never commit:
-- passwords, API keys or secrets
-- client names, tenant IDs or internal configuration
-- screenshots from work systems or customer data
+This repository is **public**. Never commit passwords, API keys, client names, tenant IDs, internal configuration or screenshots from work systems.
 
 ---
 
