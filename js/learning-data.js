@@ -17,8 +17,8 @@ const LEARNING_UPDATED = "2026-10";
 
 const LEARNING = [
   { logo:"QA", file:"qa", provider:"QA", start:"2026-07", end:"2027-07",
-    title:{ en:"AI & Automation Apprenticeship", fr:"Apprentissage IA & Automatisation" },
-    meta: { en:"About 12 months", fr:"Environ 12 mois" },
+    title:{ en:"AI & Automation Apprenticeship", fr:"Alternance IA & Automatisation" },
+    meta: { en:"About 12 months", fr:"Environ 12 mois · niveau Bac+2" },
     covers:[
       { en:"Business transformation through AI and automation", fr:"Transformation de l'entreprise grâce à l'IA et à l'automatisation" },
       { en:"Responsible AI: balancing efficiency with safety", fr:"IA responsable : concilier efficacité et sécurité" },
@@ -27,25 +27,25 @@ const LEARNING = [
     ],
     tools:["Power Automate","Microsoft Copilot","RPA","Python","GitHub Copilot","Power Platform","CI/CD"] },
 
-  { logo:"HP", file:"hackpath", provider:"HackPath", progress:75,
-    progressLabel:{ en:"Phase 4 of 4", fr:"Phase 4 sur 4" },
-    title:{ en:"Cybersecurity Bootcamp", fr:"Bootcamp cybersécurité" },
-    meta: { en:"4 phases · 90 days", fr:"4 phases · 90 jours" },
-    steps:[
-      { status:"done",    en:"Linux Foundations", fr:"Fondamentaux Linux" },
-      { status:"done",    en:"Terminal & Bash", fr:"Terminal & Bash" },
-      { status:"done",    en:"Networking", fr:"Réseaux" },
-      { status:"current", en:"Practical Cybersecurity", fr:"Cybersécurité pratique" },
+  { logo:"G", file:"google", provider:"Google",
+    title:{ en:"Google Workspace Administration", fr:"Administration Google Workspace" },
+    meta: { en:"Learning path", fr:"Parcours d'apprentissage" },
+    covers:[
+      { en:"Google Admin Console and tenant management", fr:"Google Admin Console et gestion du tenant" },
+      { en:"User, group and organisational unit management", fr:"Gestion des utilisateurs, groupes et unités organisationnelles" },
+      { en:"Gmail and Calendar administration", fr:"Administration Gmail et Agenda" },
+      { en:"Google Drive and Shared Drives configuration", fr:"Configuration de Google Drive et des disques partagés" },
+      { en:"Security policies, access controls and 2FA enforcement", fr:"Politiques de sécurité, contrôles d'accès et application du 2FA" },
     ],
-    tools:["Linux","Bash","Nmap","Wireshark","Burp Suite","TryHackMe"] },
+    tools:["Google Admin Console","Gmail","Google Drive","Google Meet","Google Calendar","Workspace Security"] },
 
   { logo:"MS", file:"microsoft", provider:"Microsoft", progress:50,
     progressLabel:{ en:"1 certified · 1 in progress", fr:"1 obtenue · 1 en cours" },
     title:{ en:"Microsoft Certifications", fr:"Certifications Microsoft" },
     meta: { en:"Certification path", fr:"Parcours de certification" },
     steps:[
-      { status:"done",    en:"Azure AI Fundamentals (AI‑901)", fr:"Azure AI Fundamentals (AI‑901)" },
-      { status:"current", en:"Security, Compliance, and Identity Fundamentals (SC‑900)", fr:"Security, Compliance, and Identity Fundamentals (SC‑900)" },
+      { status:"done",    en:"Azure AI Fundamentals (AI-901)", fr:"Azure AI Fundamentals (AI-901)" },
+      { status:"current", en:"Security, Compliance, and Identity Fundamentals (SC-900)", fr:"Security, Compliance, and Identity Fundamentals (SC-900)" },
     ],
     tools:["Azure AI","Microsoft Entra ID","Microsoft Purview","Microsoft Defender"] },
 ];

@@ -22,11 +22,11 @@ const TT = {
     cmds: {
       help:'show this list', whoami:'who is Zaafir?', about:'a short introduction', experience:'work history',
       projects:'list all projects', open:'open a project by number', skills:'tools and skills', certs:'certifications',
-      contact:'ways to get in touch', headers:'analyse an email\'s headers (try: headers bad)', phish:'play Spot the Phish', learning:'what I\'m studying now', goto:'jump to a section',
+      contact:'ways to get in touch', phish:'play Spot the Phish', dns:'check a domain\'s SPF, DMARC and DKIM', ca:'build a Conditional Access policy', triage:'play the ticket triage game', learning:'what I\'m studying now', goto:'jump to a section',
       theme:'switch light / dark', lang:'switch English / French', date:'today\'s date in London', clear:'clear the screen', exit:'close the terminal'
     },
     whoami: ['Zaafir', 'IT Professional · Microsoft Technologies · Cybersecurity · AI & Automation', 'Service Desk Analyst at Zinath Solutions · London, UK', 'Studying: AI & Automation Apprenticeship'],
-    about: 'I support colleagues and clients with day-to-day IT, system and data issues across Microsoft 365, Entra ID and email security. I find the cause, fix it, and document it so others can follow.',
+    about: 'I help clients manage their IT across Microsoft 365, Entra ID and email security — diagnosing issues, delivering fixes that last, and documenting everything so the solution sticks.',
     exp: [['Apr 2024 – now','Service Desk Analyst · Zinath Solutions'],['Apr 2022 – Apr 2024','Assistant Administrator · Zinath Solutions'],['Aug – Sep 2026','Oracle Cyber Security Work Experience · Springpod'],['Nov – Dec 2024','Fujitsu: Cloud Work Experience · Springpod'],['Sep – Oct 2024','Software Developer Work Experience · Springpod']],
     openHint: 'Type <b>open 1</b> (or any number) for details.',
   },
@@ -46,11 +46,11 @@ const TT = {
     cmds: {
       help:'afficher cette liste', whoami:'qui est Zaafir ?', about:'une courte présentation', experience:'parcours professionnel',
       projects:'lister tous les projets', open:'ouvrir un projet par numéro', skills:'outils et compétences', certs:'certifications',
-      contact:'me contacter', headers:'analyser les en-têtes d\'un e-mail (essayez : headers bad)', phish:'jouer à Repérez le phishing', learning:'ce que j\'étudie', goto:'aller à une section',
+      contact:'me contacter', phish:'jouer à Repérez le phishing', dns:'vérifier SPF, DMARC et DKIM d\'un domaine', ca:'créer une stratégie d\'accès conditionnel', triage:'jouer au tri de tickets', learning:'ce que j\'étudie', goto:'aller à une section',
       theme:'basculer clair / sombre', lang:'basculer anglais / français', date:'date du jour à Londres', clear:'effacer l\'écran', exit:'fermer le terminal'
     },
-    whoami: ['Zaafir', 'Professionnel de l\'informatique · Technologies Microsoft · Cybersécurité · IA & Automatisation', 'Analyste Service Desk chez Zinath Solutions · Londres, Royaume-Uni', 'En formation : apprentissage IA & Automatisation'],
-    about: 'J\'accompagne collègues et clients au quotidien sur les problèmes informatiques, systèmes et données, avec Microsoft 365, Entra ID et la sécurité des e-mails. Je trouve la cause, je corrige et je documente.',
+    whoami: ['Zaafir', 'Professionnel de l\'informatique · Technologies Microsoft · Cybersécurité · IA & Automatisation', 'Analyste Service Desk chez Zinath Solutions · Londres, Royaume-Uni', 'En alternance IA & Automatisation'],
+    about: 'J\'aide les clients à gérer leur informatique avec Microsoft 365, Entra ID et la sécurité des e-mails — diagnostic, résolution durable et documentation complète.',
     exp: [['avr. 2024 – auj.','Analyste Service Desk · Zinath Solutions'],['avr. 2022 – avr. 2024','Assistant administratif · Zinath Solutions'],['août – sept. 2026','Oracle : expérience en cybersécurité · Springpod'],['nov. – déc. 2024','Fujitsu : expérience Cloud · Springpod'],['sept. – oct. 2024','Expérience Développeur logiciel · Springpod']],
     openHint: 'Tapez <b>open 1</b> (ou un autre numéro) pour les détails.',
   }
@@ -76,7 +76,7 @@ const print = (html, cls = '') => { const d = document.createElement('div'); if 
 const pad = (s, n) => s + ' '.repeat(Math.max(1, n - s.length));
 
 function renderChips(){
-  $('#termChips', term).innerHTML = ['help','whoami','projects','phish','learning','headers bad','contact','sudo hire-zaafir']
+  $('#termChips', term).innerHTML = ['help','whoami','projects','phish','ca','triage','learning','contact','sudo hire-zaafir']
     .map(c => `<button type="button" data-run="${esc(c)}">${esc(c)}</button>`).join('');
 }
 
@@ -89,6 +89,7 @@ function openTerm(){
 function closeTerm(){ if (term.open) term.close(); }
 
 /* ---------- Commands ---------- */
+const labTab = name => { COMMANDS.goto('lab'); setTimeout(() => { $(`.lab-tab[data-tab="${name}"]`)?.click(); $('#' + name)?.scrollIntoView({ behavior:'smooth' }); }, onHome ? 350 : 0); };
 const COMMANDS = {
   help(){
     const T = tT();
@@ -118,13 +119,6 @@ const COMMANDS = {
   email(){ location.href = 'mailto:' + MAIL; },
   linkedin(){ window.open('https://www.linkedin.com/in/zaafir-exe/', '_blank', 'noopener'); },
   github(){ window.open('https://github.com/zaafirrr', '_blank', 'noopener'); },
-  headers(arg){
-    COMMANDS.goto('lab');
-    setTimeout(() => {
-      $('#headers')?.scrollIntoView({ behavior:'smooth' });
-      if (arg === 'bad' || arg === 'good') $(`[data-sample="${arg}"]`)?.click(); else $('#hdInput')?.focus();
-    }, onHome ? 350 : 0);
-  },
   goto(arg){
     const s = (arg || '').toLowerCase();
     if (!SECTIONS.includes(s)) return print(tT().usageGoto, 'warn');
@@ -132,7 +126,10 @@ const COMMANDS = {
     if (onHome) $('#' + s)?.scrollIntoView({ behavior: 'smooth' });
     else location.href = 'index.html#' + s;
   },
-  phish(){ COMMANDS.goto('lab'); setTimeout(() => $('#phish')?.scrollIntoView({ behavior:'smooth' }), onHome ? 350 : 0); },
+  phish(){ labTab('phish'); },
+  dns(){ labTab('dns'); },
+  ca(){ labTab('ca'); },
+  triage(){ labTab('triage'); },
   learning(){
     print(LEARNING.map(c => `  <span class="acc">${esc(c.title[lang])}</span> <span class="dim">· ${esc(c.provider)}</span>${c.steps ? '\n' + c.steps.map(st => `    <span class="${st.status === 'done' ? 'ok' : st.status === 'current' ? 'warn' : 'dim'}">${st.status === 'done' ? '✔' : st.status === 'current' ? '▸' : '·'} ${esc(st[lang])}</span>`).join('\n') : ''}`).join('\n'));
   },
