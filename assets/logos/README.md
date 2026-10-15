@@ -22,3 +22,4 @@ Good places to get logos: each company's LinkedIn page (right-click the
 logo → Save image as) or their official press / brand page.
 
 If a file is missing or misnamed, the letters simply stay.
+| QA (AI & Automation Apprenticeship) | `qa.png` |
